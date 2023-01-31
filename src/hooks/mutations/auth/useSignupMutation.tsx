@@ -1,7 +1,7 @@
-import api from "api/axios";
+import api from "../../../api/axios";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { showToaster } from "utils/toast-utils";
+import { showToaster } from "../../../utils/toast-utils";
 
 type SignupResponse = {
   hash: string;
@@ -9,9 +9,10 @@ type SignupResponse = {
 };
 
 interface ISignUp {
-  emailId: string;
+  userName: string;
   password: string;
   name: string;
+  emailId: string;
   // contact:string;
   // countryCode:string;
   // postCode:string;
@@ -24,9 +25,10 @@ const useSignupMutation = () => {
   const navigate = useNavigate();
 
   return useMutation(
-    async ({ emailId, password, name }: ISignUp) => {
+    async ({ userName, password, name, emailId }: ISignUp) => {
       const payload = {
         name,
+        userName,
         emailId,
         // firstname: " ",
         // lastname: " ",
@@ -41,9 +43,9 @@ const useSignupMutation = () => {
         // },
         // role: ['buyer'],
       };
-      const signupResponse = await api.post("/issuers/create", payload);
+      const signupResponse = await api.post("/users/signup", payload);
       console.log("Response ye hai", signupResponse);
-      
+
       return signupResponse.data as SignupResponse;
     },
     {

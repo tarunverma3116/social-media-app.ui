@@ -14,10 +14,11 @@ import { FcGoogle } from "react-icons/fc";
 import back from "assets/images/Login/Mask group(1).png";
 
 type Inputs = {
-  emailId: string;
+  userName: string;
   password: string;
   confirmed_password: string;
   name: string;
+  emailId: string;
 };
 
 interface Props {}
@@ -36,28 +37,12 @@ const SignUp = (props: Props) => {
 
   const onSubmitHandler = (data: Inputs) => {
     console.log({ data });
-    const {
-      emailId,
-      password,
-      name,
-      //   contact,
-      //   countryCode,
-      //   postCode,
-      //   state,
-      //   country,
-      //   city,
-    } = data;
-    signupMutation.mutate({
-      emailId,
-      password,
-      name,
-      //   contact,
-      //   countryCode,
-      //   postCode,
-      //   state,
-      //   country,
-      //   city,
-    });
+    const { userName, password, name, emailId } = data;
+    if (password === data.confirmed_password) {
+      signupMutation.mutate({ userName, password, name, emailId });
+    } else {
+      alert("Password does not match");
+    }
   };
 
   if (signupMutation.error) {
@@ -90,10 +75,10 @@ const SignUp = (props: Props) => {
             </div>
           </div>
           <div className="relative">
-            <div className="form-container h-full grid place-items-center bg-foreground-highlight  justify-items-center  z-20">
+            <div className="form-container h-full grid place-items-center bg-foreground-highlight  justify-items-center z-20">
               <form
                 onSubmit={handleSubmit(onSubmitHandler)}
-                className="flex-col place-items-center py-6 lg:w-1/2"
+                className="flex-col place-items-center py-6 lg:w-2/3"
               >
                 <div className="flex justify-between">
                   <button
@@ -113,22 +98,30 @@ const SignUp = (props: Props) => {
                     Login
                   </button>
                 </div>
-                <div className="font-semibold text-3xl mb-12 text-neutral-50 mt-5 text-center">
+                <div className="font-semibold text-2xl mb-12 text-neutral-50 mt-5 text-center">
                   Create a new account{" "}
                 </div>
                 {/* {loginMutation?.error instanceof Error && <p>{loginMutation?.error?.response?.data?.message!}</p>} */}
-                <FormTextInput
-                  type="text"
-                  label="Name"
-                  className="mb-6"
-                  register={() => register("name", { required: true })}
-                  error={errors.name && "Name Required"}
-                />
+                <div className="flex w-full flex-row justify-between">
+                  <FormTextInput
+                    type="text"
+                    label="Name"
+                    className="mb-6 w-full"
+                    register={() => register("name", { required: true })}
+                    error={errors.name && "Name Required"}
+                  />
+                  <FormTextInput
+                    label="Username"
+                    className="mb-6 w-full"
+                    register={() => register("userName", { required: true })}
+                    error={errors.userName && "UserName Required"}
+                  />
+                </div>
                 <FormTextInput
                   label="Email"
-                  className="mb-6"
+                  className="mb-6 w-full"
                   register={() => register("emailId", { required: true })}
-                  error={errors.emailId && "Email Required"}
+                  error={errors.emailId && "UserName Required"}
                 />
                 <FormTextInput
                   label="Password"

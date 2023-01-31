@@ -16,6 +16,34 @@
   height: 100%;
 }
 
+.outlet{
+  padding-top: 5rem;
+  padding-bottom: 2rem;
+  padding-left: 11rem;
+  padding-right: 11rem;
+}
+
+section {
+  margin: 0;
+  padding: 20px;
+  text-align: left;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .outlet{
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  section{
+    padding: 0px;
+    width: 100%;
+    margin: 0;
+  }
+}
+
 @font-face {
   font-family: Poppins;
   src: url("./assets/fonts/Poppins-Regular.ttf");
@@ -24,6 +52,85 @@
 
 section {
   padding: 1.5rem;
+}
+
+#toast-message {
+  border-radius: 5px;
+  background-color: #040720;
+  border: 1px solid #9B71D8;
+  color: #fff;
+}
+
+.preview-box {
+  background: rgba(18, 26, 35, 0.2);
+  box-shadow: 0px 8px 36px rgba(132, 145, 179, 0.18);
+  border-radius: 16px;
+}
+
+/* Collection Tab*/
+.collections-tab-group {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  width: 56%;
+
+  padding-bottom: 20px;
+}
+
+.collections-tab-group .collection-tab-active {
+  background: transparent;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #23aee3;
+  border: none;
+  outline: none;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #23aee3;
+}
+
+.collections-tab-group .collection-tab-non-active {
+  background: transparent;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.5);
+  border: none;
+  outline: none;
+
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.collections-tab-group-light .collection-tab-non-active {
+  background: transparent;
+  cursor: pointer;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.5);
+  border: none;
+  outline: none;
+  width: 95%;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.collections-tab-group .collection-tab-non-active:hover {
+  color: #23aee3;
+}
+
+.user-card {
+  background: rgba(18, 26, 35, 0.2);
+  box-shadow: 0px 8px 8px rgba(132, 145, 179, 0.18);
+  backdrop-filter: blur(24px);
+  border-radius: 16px;
+  border: 0.5px solid rgba(168, 168, 168, 0.1);
 }
 
 

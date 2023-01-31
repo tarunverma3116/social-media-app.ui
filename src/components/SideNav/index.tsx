@@ -1,125 +1,108 @@
 import React, { useState } from "react";
-import { TbCurrencyDollar, TbHeartRateMonitor } from "react-icons/tb";
-import {
-  AiOutlineFolderOpen,
-  AiFillSetting,
-  AiOutlineBarChart,
-  AiOutlineAppstore,
-  AiOutlineTable,
-} from "react-icons/ai";
-import { BsCollection } from "react-icons/bs";
-import { MdPodcasts, MdOutlineDoubleArrow } from "react-icons/md";
-import { MdOutlinePeopleAlt } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { FiDollarSign, FiHelpCircle } from "react-icons/fi";
-import { IoPricetagOutline } from "react-icons/io5";
-import { BiHomeAlt } from "react-icons/bi";
 import { twMerge } from "tailwind-merge";
-import { HiOutlinePencil } from "react-icons/hi";
 import NavbarLink from "../Navbar/NavbarLink";
 import { useLocation } from "react-router-dom";
+import { RiBubbleChartLine } from "react-icons/ri";
+import { IoSettingsOutline } from "react-icons/io5";
+import { MdOutlineLogout } from "react-icons/md";
+import { HiViewGridAdd } from "react-icons/hi";
+import { HiUsers } from "react-icons/hi";
+import { RiUserLine } from "react-icons/ri";
+
 interface ISideNavProps {}
 
 const SideNav: React.FunctionComponent<ISideNavProps> = (props) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const { pathname } = useLocation();
 
   const mainNavSettings = [
     {
       label: "Home",
       link: "/home",
-      icon: <BiHomeAlt />,
+      icon: <RiBubbleChartLine />,
       active: pathname === "/home",
     },
     {
-      label: "Deals",
-      link: "/deals/all",
-      icon: <IoPricetagOutline />,
-      active: pathname === "/deals/all" || pathname === "/deals/create",
+      label: "Create",
+      link: "/create",
+      icon: <HiViewGridAdd />,
+      active: pathname === "/create" || pathname === "/create",
     },
     {
-      label: "Membership",
-      link: "/membership",
-      icon: <MdOutlinePeopleAlt />,
-      active: pathname === "/membership",
+      label: "Users",
+      link: "/users",
+      icon: <HiUsers />,
+      active: pathname === "/users" || pathname === "/users",
     },
     {
-      label: "Rewards",
-      link: "/rewards",
-      icon: <FiDollarSign />,
-      active: pathname === "/rewards",
-    },
-    // {
-    //   label: "Collections",
-    //   link: "/collections",
-    //   icon: <BsCollection />,
-    //   active: pathname === "/collections",
-    // },
-    {
-      label: "Customize Homepage",
-      link: "/customizehomepage",
-      icon: <HiOutlinePencil />,
-      active: pathname === "/customizehomepage",
+      label: "Profile",
+      link: "/profile",
+      icon: <RiUserLine />,
+      active: pathname === "/profile" || pathname === "/profile",
     },
   ];
 
   const secNavSettings = [
     {
-      label: "Help/wiki",
-      link: "/help",
-      icon: <FiHelpCircle />,
-      active: pathname === "/help",
-    },
-    {
-      label: "Settings",
-      link: "/settings",
-      icon: <AiFillSetting />,
-      active: pathname === "/settings",
+      label: "Logout",
+      link: "/login",
+      icon: <MdOutlineLogout />,
+      active: pathname === "/login",
     },
   ];
 
   return (
     <div
       className={twMerge(
-        "overflow-hidden flex-shrink-0 transition-all border-t-5 shadow-md border-indigo-400",
-        isCollapsed ? "w-22" : "w-72"
+        "overflow-hidden transition-all border-t-5  border-indigo-400 rounded hidden lg:flex",
+        isCollapsed ? "w-18" : "w-60"
       )}
     >
       <div
         className={twMerge(
-          "w-72 bg-foreground-primary flex flex-col text-white absolute inset-y-0 left-0",
-          isCollapsed ? "w-22" : "w-72"
+          "w-60  flex flex-col text-white fixed inset-y-0 left-0 rounded",
+          isCollapsed ? "w-18" : "w-60"
         )}
       >
-        <nav className="flex-col flex px-2 pt-6 mt-12">
+        <nav className="flex-col flex px-2 pt-14 mt-12">
           <ul className="flex flex-col gap-2">
-            {mainNavSettings.map((navItem) => (
+            {mainNavSettings.map((navItem, key) => (
               <SideNavListItem
                 label={isCollapsed ? "" : navItem.label}
                 active={navItem.active}
                 icon={navItem.icon}
                 link={navItem.link}
+                key={key}
               />
             ))}
           </ul>
         </nav>
-        <ul className="flex flex-col gap-2 mt-auto ">
-          <hr />
-          {secNavSettings.map((navItem) => (
-            <SideNavListItem
-              label={isCollapsed ? "" : navItem.label}
-              active={navItem.active}
-              icon={navItem.icon}
-              link={navItem.link}
-            />
+        <ul className="flex flex-col gap-2 mt-auto ml-1 mb-2">
+          {secNavSettings.map((navItem, key) => (
+            <div
+              title="Logout"
+              onClick={() => {
+                console.log("logout pressed");
+                localStorage.removeItem("access_token");
+              }}
+            >
+              <SideNavListItem
+                label={isCollapsed ? "" : navItem.label}
+                active={navItem.active}
+                icon={navItem.icon}
+                link={navItem.link}
+                key={key}
+              />
+            </div>
           ))}
         </ul>
-        <button
+        {/* <button
           className="p-4 text-black"
           onClick={() => setIsCollapsed(!isCollapsed)}
         >
           {isCollapsed ? <MdOutlineDoubleArrow /> : "Close"}
-        </button>
+        </button> */}
       </div>
     </div>
   );
@@ -145,8 +128,9 @@ const SideNavListItem: React.FunctionComponent<ISideNavListItemProps> = ({
     >
       <li
         className={twMerge(
-          " flex px-3 gap-2 py-2 items-center text-foreground-secondary ",
-          active && "bg-foreground-accent py-3 text-white"
+          " flex px-3 gap-2 py-2 items-center text-white dark:text-black",
+          active &&
+            "bg-gradient-to-r from-[#23AEE3] via-[#9B71D8] to-[#FD3DCE] rounded-xl py-3 text-white font-bold"
         )}
       >
         {React.cloneElement(icon, {
