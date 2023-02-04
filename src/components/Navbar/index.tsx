@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { RiUserLine } from "react-icons/ri";
 import { HiMenuAlt4 } from "react-icons/hi";
@@ -26,6 +26,8 @@ const Navbar = (props: Props) => {
     setTheme(colorTheme);
     setLightToggle(checked);
   };
+
+  useEffect(() => {}, [props.account]);
 
   return (
     <div className="flex flex-shrink-0 h-16 pl-5 pr-8 bg-transparent fixed inset-x-0 top-0 items-stretch z-50 text-white dark:text-black backdrop-filter backdrop-blur-lg bg-opacity-5">
@@ -86,7 +88,7 @@ const Navbar = (props: Props) => {
                     {props.account ? (
                       <img
                         src={`https://pixelpark-images.s3.amazonaws.com/${props.account.profileImage}`}
-                        className="rounded-full w-8 h-8"
+                        className="rounded-lg w-8 h-8 object-cover"
                         alt="dp"
                       />
                     ) : (

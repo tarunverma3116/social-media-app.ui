@@ -1,12 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   user: any;
 };
 
 const UserCard = (props: Props) => {
+  const navigate = useNavigate();
   return (
-    <div className="user-card bg-neutral min-w-[250px] max-w-[320px]">
+    <div
+      onClick={() => {
+        navigate(`/profile/${props.user._id}`);
+      }}
+      className="user-card bg-neutral min-w-[250px] max-w-[320px] cursor-pointer rounded-md shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+    >
       <div className="grid grid-cols-1">
         <div className="p-3">
           <img

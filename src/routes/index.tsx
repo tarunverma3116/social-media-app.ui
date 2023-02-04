@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import Create from "../pages/Create";
 import getUserDetails from "../hooks/mutations/account/getUserDetails";
 import Users from "../pages/Users";
+import Conversations from "pages/Conversations";
 
 export const PublicRoutes = () => {
   const [account, setAccount] = React.useState<any>(null);
@@ -32,9 +33,14 @@ export const PublicRoutes = () => {
     <Routes>
       <Route path="/" element={<Layout account={account} />}>
         <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile account={account} />} />
+        <Route path="/profile/:id" element={<Profile account={account} />} />
         <Route path="/create" element={<Create />} />
         <Route path="/users" element={<Users />} />
+        <Route
+          path="/conversations"
+          element={<Conversations account={account} />}
+        />
       </Route>
       <Route path="/login" element={<SignInForm />} />
       <Route path="/signup" element={<SignUp />} />

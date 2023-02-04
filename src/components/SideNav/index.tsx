@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import NavbarLink from "../Navbar/NavbarLink";
 import { useLocation } from "react-router-dom";
-import { RiBubbleChartLine } from "react-icons/ri";
-import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
 import { HiViewGridAdd } from "react-icons/hi";
 import { HiUsers } from "react-icons/hi";
 import { RiUserLine } from "react-icons/ri";
+import { CgFeed } from "react-icons/cg";
+import { AiOutlineMessage } from "react-icons/ai";
 
 interface ISideNavProps {}
 
@@ -20,7 +20,7 @@ const SideNav: React.FunctionComponent<ISideNavProps> = (props) => {
     {
       label: "Home",
       link: "/home",
-      icon: <RiBubbleChartLine />,
+      icon: <CgFeed />,
       active: pathname === "/home",
     },
     {
@@ -28,6 +28,12 @@ const SideNav: React.FunctionComponent<ISideNavProps> = (props) => {
       link: "/create",
       icon: <HiViewGridAdd />,
       active: pathname === "/create" || pathname === "/create",
+    },
+    {
+      label: "Conversations",
+      link: "/conversations",
+      icon: <AiOutlineMessage />,
+      active: pathname === "/conversations" || pathname === "/conversations",
     },
     {
       label: "Users",
