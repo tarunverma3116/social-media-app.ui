@@ -85,9 +85,7 @@ const Profile = (props: Props) => {
   useEffect(() => {}, [open]);
 
   const FollowUser = async (id: any) => {
-    spinner.setLoadingState(true);
     const response = await useFollowUser(id);
-    spinner.setLoadingState(false);
     if (response.message === "User followed successfully") {
       toast.success("User followed successfully", { toastId: "toast-message" });
     } else if (response.message === "Already following the user") {

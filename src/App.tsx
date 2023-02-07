@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
-import { PublicRoutes } from "./routes/index";
+import { PrivateRoutes, PublicRoutes } from "./routes/index";
 import GlobalSpinner from "./components/Spinner/GlobalSpinner";
 import { ToastContainer } from "react-toastify";
 
@@ -9,6 +9,7 @@ function App() {
     <BrowserRouter>
       <div className="App dark:bg-white">
         <PublicRoutes />
+        <PrivateRoutes />
         <GlobalSpinner />
         <ToastContainer
           // id="toast-message"

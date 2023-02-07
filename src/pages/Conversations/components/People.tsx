@@ -1,8 +1,14 @@
 import useGetFollowing from "hooks/mutations/account/useGetFollowing";
+import useGetChat from "hooks/queries/chats/useGetChat";
 import React from "react";
 import { useSpinner } from "../../../context/Spinner";
 
-type Props = {};
+type Props = {
+  chat: any;
+  setChat: any;
+  user: any;
+  setUser: any;
+};
 
 const People = (props: Props) => {
   const [searchParams, setSearchParams] = React.useState<any>({ q: "" });
@@ -15,6 +21,13 @@ const People = (props: Props) => {
     console.log("people", response.data);
     setUsers(response.data);
     spinner.setLoadingState(false);
+  };
+
+  const HandleSetChat = async (user: any) => {
+    await props.setUser(user);
+    const chat = await useGetChat(user._id);
+    console.log("chat", chat);
+    props.setChat(chat);
   };
 
   const HandleSearchUsers = async (e: any) => {
@@ -31,16 +44,16 @@ const People = (props: Props) => {
   }, []);
 
   return (
-    <div className="w-full people-card flex flex-col gap-2 p-2 text-white dark:text-black">
+    <div className="w-full people-card flex flex-col gap-3 p-2 text-white dark:text-black min-h-[600px]">
       <form className="form-control" onSubmit={HandleSearchUsers}>
         <div className="input-group mb-3">
           <input
             type="text"
             placeholder="Search for users"
-            className="input input-bordered bg-transparent w-full border border-slate-700"
+            className="input input-bordered bg-transparent w-full"
             onChange={(e) => setSearchParams({ q: e.target.value })}
           />
-          <button className="btn btn-square bg-transparent" type="button">
+          <button className="btn btn-square" type="button">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -58,10 +71,13 @@ const People = (props: Props) => {
           </button>
         </div>
       </form>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-2">
         {users?.map((user: any) => {
           return (
-            <div className="flex flex-row gap-3 items-center py-3 px-1 border-t border-slate-800 hover:bg-slate-800 cursor-pointer">
+            <div
+              className="flex flex-row gap-3 items-center py-2 px-1 border-t border-slate-800 cursor-pointer hover:bg-slate-800"
+              onClick={() => HandleSetChat(user)}
+            >
               <div className="flex flex-col">
                 <img
                   src={`https://pixelpark-images.s3.amazonaws.com/${user.profileImage}`}

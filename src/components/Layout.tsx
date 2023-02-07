@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 // import PropertyCard from "pages/Marketplace/components/PropertyCard";
 import { Outlet } from "react-router-dom";
 import SideNav from "./SideNav";
+
 interface ILayoutProps {
   account: any;
 }
@@ -13,6 +14,7 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
   const navigate = useNavigate();
   useEffect(() => {
     const item = localStorage.getItem("access_token");
+    console.log(item);
     if (item) {
       navigate("/home");
     } else {

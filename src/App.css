@@ -150,6 +150,14 @@ section {
   border: 0.5px solid rgba(168, 168, 168, 0.1);
 }
 
+.chat-card {
+  background: rgba(18, 26, 35, 0.2);
+  box-shadow: 0px 8px 8px rgba(132, 145, 179, 0.18);
+  backdrop-filter: blur(24px);
+  border-radius: 16px;
+  border: 0.5px solid rgba(168, 168, 168, 0.1);
+}
+
 .hero-button {
   box-sizing: border-box;
   justify-content: center;
@@ -163,6 +171,33 @@ section {
   border-color: #fd3dce;
   border-radius: 6px;
   padding: 8px 16px;
+}
+
+.speech-bubble-left {
+  border: 0.5px solid #ffffff20;
+  background-color: #2d158240;
+  height: auto;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border-radius: 24px;
+  border-bottom-left-radius: 0px;
+  width: fit-content;
+}
+
+.speech-bubble-right {
+  border: 0.5px solid #ffffff20;
+  background-color: #06011a80;
+  height: auto;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border-radius: 24px;
+  border-bottom-right-radius: 0px;
+  width: fit-content;
+}
+
+.speech-bubble {
+  width: 100%;
+  border-radius: 10px;
 }
 
 

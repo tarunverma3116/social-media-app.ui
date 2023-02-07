@@ -10,18 +10,42 @@ import Create from "../pages/Create";
 import getUserDetails from "../hooks/mutations/account/getUserDetails";
 import Users from "../pages/Users";
 import Conversations from "pages/Conversations";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const PublicRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/login" element={<SignInForm />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+    </Routes>
+  );
+};
+
+export const PrivateRoutes = () => {
   const [account, setAccount] = React.useState<any>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    const item = localStorage.getItem("access_token");
+    console.log(item);
+    if (item) {
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  }, []);
+
   const fetchAccount = async () => {
+    setLoading(false);
     const response = await getUserDetails();
     setAccount(response.data);
-    setLoading(false);
   };
 
   React.useEffect(() => {
+    console.log("fetching account");
     fetchAccount();
   }, []);
 
@@ -31,6 +55,7 @@ export const PublicRoutes = () => {
 
   return (
     <Routes>
+      <Route path="/login" element={<SignInForm />} />
       <Route path="/" element={<Layout account={account} />}>
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile account={account} />} />
@@ -42,9 +67,8 @@ export const PublicRoutes = () => {
           element={<Conversations account={account} />}
         />
       </Route>
-      <Route path="/login" element={<SignInForm />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
     </Routes>
   );
 };
+
+export default PublicRoutes;
