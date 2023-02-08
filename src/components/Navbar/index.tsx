@@ -27,7 +27,9 @@ const Navbar = (props: Props) => {
     setLightToggle(checked);
   };
 
-  useEffect(() => {}, [props.account]);
+  useEffect(() => {
+    console.log("navbar account", props.account);
+  }, [props.account]);
 
   return (
     <div className="flex flex-shrink-0 h-16 pl-5 pr-8 bg-transparent fixed inset-x-0 top-0 items-stretch z-50 text-white dark:text-black backdrop-filter backdrop-blur-lg bg-opacity-5">

@@ -3,13 +3,16 @@ import { BrowserRouter } from "react-router-dom";
 import { PrivateRoutes, PublicRoutes } from "./routes/index";
 import GlobalSpinner from "./components/Spinner/GlobalSpinner";
 import { ToastContainer } from "react-toastify";
+import React from "react";
 
 function App() {
+  const [account, setAccount] = React.useState<any>(null);
+
   return (
     <BrowserRouter>
       <div className="App dark:bg-white">
-        <PublicRoutes />
-        <PrivateRoutes />
+        <PublicRoutes account={account} setAccount={setAccount} />
+        <PrivateRoutes account={account} setAccount={setAccount} />
         <GlobalSpinner />
         <ToastContainer
           // id="toast-message"

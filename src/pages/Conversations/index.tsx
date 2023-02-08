@@ -22,7 +22,7 @@ const Conversations = (props: Props) => {
           <People chat={chat} setChat={setChat} user={user} setUser={setUser} />
         </div>
         <div className="flex flex-col basis-2/3">
-          <Chat chat={chat} user={user} setUser={setUser} />
+          <Chat chat={chat} user={user} setUser={setUser} setChat={setChat} />
         </div>
       </div>
     </section>

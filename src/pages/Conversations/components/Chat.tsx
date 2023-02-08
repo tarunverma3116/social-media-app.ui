@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import FormTextInput from "../../../components/Input/FormTextInput";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { AiOutlineSend } from "react-icons/ai";
 import { BiImageAdd } from "react-icons/bi";
 import { useSpinner } from "../../../context/Spinner";
+import useSendMessage from "../../../hooks/queries/chats/useSendMessage";
 
 type Props = {
   chat: any;
   user: any;
   setUser: any;
+  setChat: any;
 };
 
 type Inputs = {
@@ -31,6 +33,7 @@ const Chat = (props: Props) => {
     const diffHours = Math.floor(diff / (1000 * 3600));
     const diffMinutes = Math.floor(diff / (1000 * 60));
     const diffSeconds = Math.floor(diff / 1000);
+
     if (diffDays > 0) {
       return `${diffDays}d`;
     } else if (diffHours > 0) {
@@ -56,6 +59,8 @@ const Chat = (props: Props) => {
   const [csi, setCsi] = React.useState(false);
   const spinner = useSpinner();
   const imageFileExtentions = [".jpg", ".jpeg", ".png", ".gif", ".bmp"];
+  const divRef = useRef<null | HTMLDivElement>(null);
+  const divRef2 = useRef<null | HTMLDivElement>(null);
 
   const handleFileUpload = async (e: any) => {
     spinner.setLoadingState(true);
@@ -70,18 +75,42 @@ const Chat = (props: Props) => {
     spinner.setLoadingState(false);
   };
 
-  const handleComment = async (e: any) => {
+  const HandleComment = async (e: any) => {
     e.preventDefault();
-    // const response = await api.post("/orders/comment", {
-    //   orderId: order._id,
-    //   comment: comment,
-    // });
-    // fetchOrder(order._id);
+    spinner.setLoadingState(true);
+    const formData = new FormData();
+    formData.append("message", comment);
+    const response = await useSendMessage(props.user._id, formData);
+    console.log(response);
+    props.setChat(response);
     setComment("");
+    spinner.setLoadingState(false);
     // setCs(!cs);
-    // setCsi(!csi);
+    setCsi(!csi);
     // console.log(response.data);
   };
+
+  useEffect(() => {}, [props.chat]);
+
+  useEffect(() => {
+    if (divRef.current) {
+      divRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
+  }, [cs]);
+
+  useEffect(() => {
+    if (divRef2.current) {
+      divRef2.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
+  }, [csi]);
 
   return (
     props.user &&
@@ -105,41 +134,44 @@ const Chat = (props: Props) => {
               </div>
             </div>
           </div>
-          <div className="chat-card__body flex flex-col gap-3 p-2 text-white dark:text-black">
-            {props.chat?.data?.conversation.map((message: any) => {
-              return (
+          <div className="chat-card__body mt-3 overflow-y-scroll scrollbar-hide max-h-[450px]">
+            <div className="chat-card__body__messages grid grid-cols-1">
+              {props.chat.data.conversation?.map((message: any, key: any) => (
                 <div
-                  className={`chat-card__body__message flex flex-row gap-3 items-center py-2 px-1 border-t border-slate-700 cursor-pointer hover:bg-slate-800 ${
-                    message.senderId === props.user.id
-                      ? "justify-end"
-                      : "justify-start"
+                  className={`flex flex-col ${
+                    message.senderId !== props.user._id
+                      ? "justify-self-end speech-bubble-right"
+                      : "justify-self-start speech-bubble-left"
                   }`}
                 >
-                  <div className="flex flex-col">
+                  <p className="chat-card__body__messages__message__content__text">
+                    {message.text}
+                  </p>
+                  {message.image && (
                     <img
-                      src={`https://pixelpark-images.s3.amazonaws.com/${message.sender.profileImage}`}
-                      className="rounded-xl w-10 h-10"
+                      className="w-32 h-32 object-cover rounded-xl"
+                      src={`https://pixelpark-images.s3.amazonaws.com/${message.image}`}
                       alt="profile"
                     />
-
-                    <p className="text-xs text-center">
-                      {findLapsedTime(message.createdAt)}
-                    </p>
-
-                    <p className="text-xs text-center">
-                      {message.sender.userName}
-                    </p>
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="text-xs text-center">{message.message}</p>
-                  </div>
+                  )}
+                  <p
+                    className={`text-xs text-slate-600 ${
+                      message.senderId !== props.user._id
+                        ? "text-right"
+                        : "text-left"
+                    }`}
+                  >
+                    {findLapsedTime(message.time)}
+                  </p>
                 </div>
-              );
-            })}
+              ))}
+              <div ref={divRef} />
+              <div ref={divRef2} />
+            </div>
           </div>
           <div className="chat-card__footer fixed bottom-0 w-[97%]">
             <div className="speech-bubble border border-slate-700 my-2 flex items-center">
-              <form className="w-full" onSubmit={handleComment}>
+              <form className="w-full" onSubmit={HandleComment}>
                 <input
                   type="text"
                   placeholder="Type anything here..."
@@ -163,7 +195,7 @@ const Chat = (props: Props) => {
                 />
               </label>
               <button
-                onClick={handleComment}
+                onClick={HandleComment}
                 // disabled={comment.length() == 0}
                 className="h-full text-xl justify-center items-center text-white pr-3"
                 type="submit"

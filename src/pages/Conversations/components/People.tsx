@@ -72,7 +72,7 @@ const People = (props: Props) => {
         </div>
       </form>
       <div className="flex flex-col gap-2">
-        {users?.map((user: any) => {
+        {users?.map((user: any, key: any) => {
           return (
             <div
               className="flex flex-row gap-3 items-center py-2 px-1 border-t border-slate-800 cursor-pointer hover:bg-slate-800"

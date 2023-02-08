@@ -73,7 +73,7 @@ const SideNav: React.FunctionComponent<ISideNavProps> = (props) => {
       >
         <nav className="flex-col flex px-2 pt-14 mt-12">
           <ul className="flex flex-col gap-2">
-            {mainNavSettings.map((navItem, key) => (
+            {mainNavSettings.map((navItem, key: any) => (
               <SideNavListItem
                 label={isCollapsed ? "" : navItem.label}
                 active={navItem.active}
@@ -85,7 +85,7 @@ const SideNav: React.FunctionComponent<ISideNavProps> = (props) => {
           </ul>
         </nav>
         <ul className="flex flex-col gap-2 mt-auto ml-1 mb-2">
-          {secNavSettings.map((navItem, key) => (
+          {secNavSettings.map((navItem, key: any) => (
             <div
               title="Logout"
               onClick={() => {

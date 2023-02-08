@@ -17,6 +17,7 @@ import useFetchPostsFromId from "hooks/queries/account/useFetchPostsFromId";
 
 type Props = {
   account: any;
+  setAccount: any;
 };
 
 const Profile = (props: Props) => {
@@ -43,6 +44,8 @@ const Profile = (props: Props) => {
     const response = await getUserDetails();
     console.log("account details", response.data);
     setAccDetails(response.data);
+    props.setAccount(response.data);
+    console.log("account set in profile", response.data);
     spinner.setLoadingState(false);
   };
 
@@ -99,7 +102,7 @@ const Profile = (props: Props) => {
 
   useEffect(() => {}, [id]);
 
-  useEffect(() => {}, [FollowUser(id)]);
+  // useEffect(() => {}, [FollowUser(id)]);
 
   return (
     accDetails && (

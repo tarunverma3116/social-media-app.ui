@@ -13,7 +13,12 @@ import Conversations from "pages/Conversations";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-export const PublicRoutes = () => {
+type Props = {
+  account: any;
+  setAccount: any;
+};
+
+export const PublicRoutes = (props: Props) => {
   return (
     <Routes>
       <Route path="/login" element={<SignInForm />} />
@@ -23,8 +28,7 @@ export const PublicRoutes = () => {
   );
 };
 
-export const PrivateRoutes = () => {
-  const [account, setAccount] = React.useState<any>(null);
+export const PrivateRoutes = (props: Props) => {
   const [loading, setLoading] = React.useState<boolean>(true);
 
   const navigate = useNavigate();
@@ -41,13 +45,17 @@ export const PrivateRoutes = () => {
   const fetchAccount = async () => {
     setLoading(false);
     const response = await getUserDetails();
-    setAccount(response.data);
+    props.setAccount(response.data);
   };
 
   React.useEffect(() => {
     console.log("fetching account");
     fetchAccount();
   }, []);
+
+  React.useEffect(() => {
+    console.log("account in layout", props.account);
+  }, [props.account]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -56,15 +64,30 @@ export const PrivateRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<SignInForm />} />
-      <Route path="/" element={<Layout account={account} />}>
+      <Route
+        path="/"
+        element={
+          <Layout account={props.account} setAccount={props.setAccount} />
+        }
+      >
         <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile account={account} />} />
-        <Route path="/profile/:id" element={<Profile account={account} />} />
+        <Route
+          path="/profile"
+          element={
+            <Profile account={props.account} setAccount={props.setAccount} />
+          }
+        />
+        <Route
+          path="/profile/:id"
+          element={
+            <Profile account={props.account} setAccount={props.setAccount} />
+          }
+        />
         <Route path="/create" element={<Create />} />
         <Route path="/users" element={<Users />} />
         <Route
           path="/conversations"
-          element={<Conversations account={account} />}
+          element={<Conversations account={props.account} />}
         />
       </Route>
     </Routes>

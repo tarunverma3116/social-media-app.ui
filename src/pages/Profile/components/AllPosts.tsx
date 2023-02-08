@@ -8,7 +8,7 @@ const AllPosts = (props: Props) => {
   return (
     props.posts && (
       <div className="w-full grid grid-cols-3 gap-3">
-        {props.posts.map((post: any) => {
+        {props.posts.map((post: any, key: any): JSX.Element => {
           return (
             <div className="w-full h-[200px] bg-gray-200">
               <img
