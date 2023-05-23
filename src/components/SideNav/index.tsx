@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import NavbarLink from "../Navbar/NavbarLink";
 import { useLocation } from "react-router-dom";
-import { MdOutlineLogout } from "react-icons/md";
+import { MdOutlineLogout, MdOutlineLiveTv } from "react-icons/md";
 import { HiViewGridAdd } from "react-icons/hi";
 import { HiUsers } from "react-icons/hi";
 import { RiUserLine } from "react-icons/ri";
@@ -34,6 +34,12 @@ const SideNav: React.FunctionComponent<ISideNavProps> = (props) => {
       link: "/conversations",
       icon: <AiOutlineMessage />,
       active: pathname === "/conversations" || pathname === "/conversations",
+    },
+    {
+      label: "Stream",
+      link: "/stream",
+      icon: <MdOutlineLiveTv />,
+      active: pathname === "/stream" || pathname === "/stream",
     },
     {
       label: "Users",

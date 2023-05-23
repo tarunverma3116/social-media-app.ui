@@ -12,6 +12,7 @@ import Users from "../pages/Users";
 import Conversations from "pages/Conversations";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Stream from "pages/Stream/index";
 
 type Props = {
   account: any;
@@ -85,6 +86,7 @@ export const PrivateRoutes = (props: Props) => {
         />
         <Route path="/create" element={<Create />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/stream" element={<Stream account={props.account} />} />
         <Route
           path="/conversations"
           element={<Conversations account={props.account} />}
