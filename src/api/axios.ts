@@ -1,5 +1,4 @@
 import axios from 'axios';
-import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { queryClient } from 'index';
 
 const defaultOptions = {
@@ -39,14 +38,14 @@ api.interceptors.response.use((response) => {
 }
 );
 
-// Function that will be called to refresh authorization
-const refreshAuthLogic = (failedRequest: any) => axios.post('https://www.example.com/auth/token/refresh', {
-  refresh_token: localStorage.getItem('refresh_token')
-}).then(tokenRefreshResponse => {
-    localStorage.setItem('access_token', tokenRefreshResponse.data.token);
-    failedRequest.response.config.headers['Authorization'] = 'Bearer ' + tokenRefreshResponse.data.token;
-    return Promise.resolve();
-});
+// // Function that will be called to refresh authorization
+// const refreshAuthLogic = (failedRequest: any) => axios.post('https://www.example.com/auth/token/refresh', {
+//   refresh_token: localStorage.getItem('refresh_token')
+// }).then(tokenRefreshResponse => {
+//     localStorage.setItem('access_token', tokenRefreshResponse.data.token);
+//     failedRequest.response.config.headers['Authorization'] = 'Bearer ' + tokenRefreshResponse.data.token;
+//     return Promise.resolve();
+// });
 
 //createAuthRefreshInterceptor(api, refreshAuthLogic);
 export default api;
